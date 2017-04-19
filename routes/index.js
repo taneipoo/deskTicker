@@ -8,50 +8,38 @@ var express = require('express'),
 var router = express.Router();
 
 
-//var osmosis = require('osmosis'); //testing out OSMOSIS web scraper
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-// var testjs = [];
-// request('https://www.jamstockex.com', function (err, res, body) {
-//   if (!err && res.statusCode ===200) {
-//     console.log('RESP CODE: ', res.statusCode);
-//     var $ = cheerio.load(body);
-//     var tst1 = $('.js-marquee');
-//     var tst1Txt = tst1.text();
-//     //console.log(body);
-//     $('li').each(function() {
-//       var test = $(this).attr('');
-//       // console.log('This is TEST:- ', test);
-//       testjs.push(test);
-//     });
-//     console.log(testjs);
-//   }
-// });
-var dest = './public/test.json';
+var dest = './public/jse.json';
 var osmosis = require('osmosis');
 var url = 'https://www.jamstockex.com';
 
 osmosis.get(url)
 .set({
-  title: 'title',
-  extensions: [
+  //title: 'title',
+  struct: [
     osmosis
     .find('div.marquee')
     .set({
-
-      'name': 'ul',
-      'link': 'li a',
+      'ticker': 'ul',
+      //'link': 'li a',
     })
   ]
 })
 .data(function(document) {
   console.log(document);
-  jsonfile.writeFile(dest, document);
-})
-;
-
+  var obj = JSON.stringify(document);
+  obj = obj.replace(/[\s|\\n]+/g, ' ').match(/[A-Z]*[^A-Z]+/g);
+  //obj = obj.match(/[A-Z]*[^A-Z]+/g);
+  jsonfile.writeFileSync(dest, obj);
+});
+//
+// $(window).scroll(function () {
+//    if ($(window).scrollTop() >= $(obj).height() - $(window).height() - 10) {
+//       //Add newly-crunched data at the end of the page
+//    }
+// });
 module.exports = router;
