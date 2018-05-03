@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    dockerfile {
+      filename 'jseTicker'
+    }
+    
+  }
   stages {
     stage('Build') {
       steps {
