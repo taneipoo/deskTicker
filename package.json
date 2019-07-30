@@ -10,7 +10,7 @@
     "cheerio": "^0.22.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
-    "electron": "^1.6.10",
+    "electron": "^1.8.8",
     "express": "~4.15.2",
     "fs": "0.0.1-security",
     "jade": "~1.11.0",
